@@ -1,0 +1,64 @@
+#include <iostream>
+#include <vector>
+
+struct PointOfInterest {
+    int x;
+    int y;
+};
+
+int main() {
+    std::vector<PointOfInterest> pointsOfInterest;
+
+    while (true) {
+        std::cout << "Choose an option:" << std::endl;
+        std::cout << "1) Store a new location" << std::endl;
+        std::cout << "2) Remove a location" << std::endl;
+        std::cout << "3) Show stored locations" << std::endl;
+        int choice;
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                PointOfInterest poi;
+                std::cout << "Enter X coordinate: ";
+                std::cin >> poi.x;
+                std::cout << "Enter Y coordinate: ";
+                std::cin >> poi.y;
+                pointsOfInterest.push_back(poi);
+                std::cout << "Location " << poi.x << ", " << poi.y << " has been stored." << std::endl;
+                break;
+            }
+            case 2: {
+                if (pointsOfInterest.empty()) {
+                    std::cout << "No locations to remove." << std::endl;
+                    break;
+                }
+                std::cout << "The following locations are stored:" << std::endl;
+                for (size_t i = 0; i < pointsOfInterest.size(); ++i) {
+                    std::cout << i + 1 << ": " << pointsOfInterest[i].x << ", " << pointsOfInterest[i].y << std::endl;
+                }
+                std::cout << "Which location do you want to remove?" << std::endl;
+                int removeIndex;
+                std::cin >> removeIndex;
+                if (removeIndex >= 1 && removeIndex <= pointsOfInterest.size()) {
+                    pointsOfInterest.erase(pointsOfInterest.begin() + removeIndex - 1);
+                    std::cout << "Location has been removed from memory." << std::endl;
+                } else {
+                    std::cout << "Invalid location index." << std::endl;
+                }
+                break;
+            }
+            case 3: {
+                std::cout << "Stored Locations:" << std::endl;
+                for (size_t i = 0; i < pointsOfInterest.size(); ++i) {
+                    std::cout << i + 1 << ": " << pointsOfInterest[i].x << ", " << pointsOfInterest[i].y << std::endl;
+                }
+                break;
+            }
+            default:
+                std::cout << "Invalid choice. Please select a valid option." << std::endl;
+        }
+    }
+
+    return 0;
+}
